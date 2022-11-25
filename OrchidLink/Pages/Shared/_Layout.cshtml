@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject IWebHostEnvironment Environment
+@inject ICompositeViewEngine Engine
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OrchidLink</title>
+
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-x align-center">
+            <main class="cell medium-8">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/Identity/lib/jquery/dist/jquery.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
