@@ -1,5 +1,4 @@
-﻿.main {
-    .hey {
-        color: red;
-    }
-}
+﻿@import 'settings';
+@import 'foundation';
+
+@include foundation-everything;

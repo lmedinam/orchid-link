@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "del": "^7.0.0",
+    "foundation-sites": "^6.7.5",
     "gulp": "^4.0.2",
     "gulp-sass": "^5.1.0",
     "sass": "^1.56.1"

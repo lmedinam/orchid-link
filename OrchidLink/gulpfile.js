@@ -7,7 +7,12 @@ const sass = gulpSass(dartSass);
 
 gulp.task('styles', () => {
     return gulp.src('resources/sass/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass({
+           includePaths: [
+               'node_modules/foundation-sites/scss' 
+           ]
+        })
+        .on('error', sass.logError))
         .pipe(gulp.dest('wwwroot/css/'));
 });
 
