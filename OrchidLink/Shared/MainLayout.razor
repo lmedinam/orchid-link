@@ -2,19 +2,11 @@
 
 <PageTitle>OrchidLink</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4 auth">
+<div class="grid-container">
+    <div class="grid-x align-center">
+        <main class="cell medium-8">
             <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
             @Body
-        </article>
-    </main>
+        </main>
+    </div>
 </div>

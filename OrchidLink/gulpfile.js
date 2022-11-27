@@ -24,7 +24,7 @@ gulp.task('watch', () => {
 
 gulp.task('clean', () => {
     return deleteAsync([
-        'wwwroot/css/main.css',
+        'wwwroot/css/site.css',
     ]);
 });
 
