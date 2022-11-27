@@ -17,8 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 );
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(
-    options => options.SignIn.RequireConfirmedAccount = true
+builder.Services.AddDefaultIdentity<OrchidLink.Models.User>(
+    options => options.SignIn.RequireConfirmedAccount = false
 ).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddRazorPages();
@@ -33,6 +33,36 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+
+        if (context == null)
+        {
+            throw new NullReferenceException("Cannot get ApplicationDbContext");
+        }
+
+        context.Database.EnsureCreated();
+
+        var user = context.Users.FirstOrDefault();
+        if (user == null)
+        {
+            var newUser = new OrchidLink.Models.User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "John Doe",
+                UserName = "demo@user.com",
+                NormalizedUserName = "DEMO@USER.COM"
+            };
+
+            var hasher = new PasswordHasher<OrchidLink.Models.User>();
+            newUser.PasswordHash = hasher.HashPassword(newUser, "secret");
+
+            context.Users.Add(newUser);
+            context.SaveChanges();
+        }
+    }
 }
 else
 {
