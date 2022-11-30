@@ -1,12 +1,30 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager _navigationManager
 
 <PageTitle>OrchidLink</PageTitle>
 
 <div class="grid-container">
     <div class="grid-x align-center">
         <main class="cell medium-8">
-            <LoginDisplay />
+            <NavMenu />
             @Body
         </main>
     </div>
 </div>
+
+@code {
+    [CascadingParameter] protected Task<AuthenticationState>? _AuthenticationState { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+
+        var user = (await _AuthenticationState).User;
+
+        if (user.Identity != null && !user.Identity.IsAuthenticated)
+        {
+            var uri = Uri.EscapeDataString(new Uri(_navigationManager.Uri).LocalPath);
+            _navigationManager.NavigateTo($"Identity/Account/Login?returnUrl={uri}");
+        }
+    }
+}
