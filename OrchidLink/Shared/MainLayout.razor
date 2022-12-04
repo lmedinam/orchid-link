@@ -1,15 +1,12 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager _navigationManager
+@inject IJSRuntime js
 
 <PageTitle>OrchidLink</PageTitle>
 
-<div class="grid-container">
-    <div class="grid-x align-center">
-        <main class="cell medium-8">
-            <NavMenu />
-            @Body
-        </main>
-    </div>
+<NavMenu />
+<div class="grid-x">
+    @Body
 </div>
 
 @code {
@@ -26,5 +23,10 @@
             var uri = Uri.EscapeDataString(new Uri(_navigationManager.Uri).LocalPath);
             _navigationManager.NavigateTo($"Identity/Account/Login?returnUrl={uri}");
         }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("initFoundation");
     }
 }
