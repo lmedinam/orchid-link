@@ -10,5 +10,6 @@ namespace OrchidLink.Data
             : base(options)
         {
         }
+        public DbSet<Campaign> Campaigns { get; set; }
     }
 }
