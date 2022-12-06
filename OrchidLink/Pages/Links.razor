@@ -3,5 +3,12 @@
 <PageTitle>Index</PageTitle>
 
 <div>
-	<CampaignList />
+	<CampaignList @bind-CurrentCampaign=CurrentCampaign />
 </div>
+<div>
+	@CurrentCampaign
+</div>
+
+@code {
+	public string? CurrentCampaign = null;
+}

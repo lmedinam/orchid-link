@@ -33,6 +33,10 @@
         function initFoundation() {
             $(document).foundation();
         }
+
+        function callFoundation(element, method) {
+            $(element).foundation(method);
+        }
     </script>
 
     <script src="_framework/blazor.server.js"></script>

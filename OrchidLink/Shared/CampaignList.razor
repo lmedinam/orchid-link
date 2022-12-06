@@ -1,19 +1,78 @@
-﻿
+﻿@using OrchidLink.Data
+@using OrchidLink.Models
 
-<h3>CampaignList</h3>
+@inject IJSRuntime js
 
-<div class="reveal" id="exampleModal1" data-reveal>
-    <h1>Awesome. I Have It.</h1>
-    <p class="lead">Your couch. It is mine.</p>
-    <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
+<aside>
+    <div class="grid-x">
+        <h3>Campaigns</h3>
+        <button class="button" data-open="createCampaignModal">New</button>
+    </div>
+    <ul>
+        @foreach (var campaign in Campaigns)
+        {
+            <li @onclick=@(() => UpdateCurrentCampaignValue(campaign.Id))>@campaign.Name</li>
+        }
+    </ul>
+</aside>
+
+
+<div class="reveal" id="createCampaignModal" data-reveal>
+    <h1>Create Campaign</h1>
+    <EditForm Model=@Campaign OnValidSubmit=@ValidFormSubmitted>
+        <DataAnnotationsValidator />
+        <div>
+            <label class="form-label">Name</label>
+            <InputText class="form-control" @bind-Value=Campaign.Name />
+            <ValidationMessage For=@(() => Campaign.Name) />
+        </div>
+        <div>
+            <input type="submit" class="button" value="Save" />
+        </div>
+    </EditForm>
 </div>
 
-<p><button class="button" data-open="exampleModal1">Click me for a modal</button></p>
-
 @code {
-    
+    Campaign Campaign = new Campaign();
+
+    List<Campaign> Campaigns = new List<Campaign>();
+
+    [Parameter]
+    public string? CurrentCampaign { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CurrentCampaignChanged { get; set; }
+
+    [Inject]
+    private ApplicationDbContext DbContext { get; set; }
+
+    void ValidFormSubmitted(EditContext editContext)
+    {
+        DbContext.Campaigns.Add(Campaign);
+        DbContext.SaveChanges();
+
+        Campaign = new Campaign();
+
+        js.InvokeVoidAsync("callFoundation", "#createCampaignModal", "close");
+        FetchCampaigns();
+    }
+
+    async Task UpdateCurrentCampaignValue(string currentCampaign)
+    {
+        CurrentCampaign = currentCampaign;
+        await CurrentCampaignChanged.InvokeAsync(CurrentCampaign);
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+
+        FetchCampaigns();
+    }
+
+    protected void FetchCampaigns()
+    {
+        Campaigns = DbContext.Campaigns.OrderBy(b => b.CreatedAt).ToList();
+    }
 }
 
