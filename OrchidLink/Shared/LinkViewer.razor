@@ -1,0 +1,62 @@
+﻿@using OrchidLink.Data
+@using OrchidLink.Models
+
+<aside class="cell small-2">
+	<div class="grid-x">
+		<h3 class="cell auto">Links</h3>
+		<button class="button small" @onclick="@(() => CreatingLink = true)">New</button>
+	</div>
+	<ul>
+		@foreach (var link in Links)
+		{
+			<li >
+				<a href="/Links/@link.Id">
+					@link.Title
+				</a>
+			</li>
+		}
+	</ul>
+</aside>
+<main class="cell auto grid-x align-center">
+	<div class="cell small-7">
+		<div>
+			@if (CreatingLink)
+			{
+				<CreateLink @bind-Showing="CreatingLink" Campaign=@CurrentCampaign LinkCreated=@FetchLinks />
+			}
+		</div>
+	</div>
+</main>
+
+@code {
+	public bool CreatingLink = false;
+
+	List<Link> Links = new List<Link>();
+
+	[Parameter]
+	public Campaign? CurrentCampaign { get; set; }
+
+	[Inject]
+	private ApplicationDbContext DbContext { get; set; }
+
+	protected async override Task OnInitializedAsync()
+	{
+		base.OnInitialized();
+		FetchLinks();
+	}
+
+	protected void FetchLinks()
+	{
+		if (CurrentCampaign != null) {
+			Links = DbContext.Links.Where(d => d.Campaign.Id == CurrentCampaign.Id).ToList();
+			return;
+		}
+
+		Links = DbContext.Links.Where(d => d.Campaign == null).ToList();
+	}
+
+	protected override void OnParametersSet()
+	{
+		FetchLinks();
+	}
+}

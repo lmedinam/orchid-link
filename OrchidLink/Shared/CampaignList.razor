@@ -5,13 +5,13 @@
 
 <aside>
     <div class="grid-x">
-        <h3>Campaigns</h3>
-        <button class="button" data-open="createCampaignModal">New</button>
+        <h3 class="cell auto">Campaigns</h3>
+        <button class="button small" data-open="createCampaignModal">New</button>
     </div>
     <ul>
         @foreach (var campaign in Campaigns)
         {
-            <li @onclick=@(() => UpdateCurrentCampaignValue(campaign.Id))>@campaign.Name</li>
+            <li @onclick=@(() => UpdateCurrentCampaignValue(campaign))>@campaign.Name</li>
         }
     </ul>
 </aside>
@@ -38,10 +38,10 @@
     List<Campaign> Campaigns = new List<Campaign>();
 
     [Parameter]
-    public string? CurrentCampaign { get; set; }
+    public Campaign? CurrentCampaign { get; set; }
 
     [Parameter]
-    public EventCallback<string> CurrentCampaignChanged { get; set; }
+    public EventCallback<Campaign> CurrentCampaignChanged { get; set; }
 
     [Inject]
     private ApplicationDbContext DbContext { get; set; }
@@ -57,7 +57,7 @@
         FetchCampaigns();
     }
 
-    async Task UpdateCurrentCampaignValue(string currentCampaign)
+    async Task UpdateCurrentCampaignValue(Campaign currentCampaign)
     {
         CurrentCampaign = currentCampaign;
         await CurrentCampaignChanged.InvokeAsync(CurrentCampaign);

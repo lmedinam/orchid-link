@@ -1,14 +1,14 @@
-﻿@page "/Links"
+﻿@page "/Links/{LinkId?}"
+@using OrchidLink.Models
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Links</PageTitle>
 
-<div>
-	<CampaignList @bind-CurrentCampaign=CurrentCampaign />
-</div>
-<div>
-	@CurrentCampaign
-</div>
+<div class="cell small-2"><CampaignList @bind-CurrentCampaign=CurrentCampaign /></div>
+<LinkViewer CurrentCampaign=@CurrentCampaign />
 
 @code {
-	public string? CurrentCampaign = null;
+	public Campaign? CurrentCampaign = null;
+
+	[Parameter]
+    public string? LinkId { get; set; }
 }

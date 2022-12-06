@@ -1,0 +1,80 @@
+﻿@using OrchidLink.Data
+@using OrchidLink.Models
+@using System.Text.RegularExpressions
+
+<EditForm Model=@Link OnValidSubmit=@Save>
+    <DataAnnotationsValidator />
+
+    <h3>Create Link</h3>
+
+    <div>
+        <label class="form-label">Destination</label>
+        <InputText @bind-Value=Link.Destination type="text" @onblur=@BlurDestination />
+        <ValidationMessage For=@(() => Link.Destination) />
+    </div>
+    <div>
+        <label class="form-label">Title</label>
+        <InputText @bind-Value=Link.Title type="text" />
+        <ValidationMessage For=@(() => Link.Title) />
+    </div>
+    <div>
+        <label class="form-label">Generated Link</label>
+        <InputText @bind-Value=Link.Slug type="text" />
+        <ValidationMessage For=@(() => Link.Slug) />
+    </div>
+
+    <div>
+        <input type="submit" class="button" value="Save" />
+        <button class="button" @onclick=@(() => ShowingChanged.InvokeAsync(false))>
+            Cancel
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    Link Link = new Link();
+
+    [Parameter]
+    public bool Showing { get; set; }
+
+    [Parameter]
+    public Campaign? Campaign { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ShowingChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<Link> LinkCreated { get; set; }
+
+    [Inject]
+    private ApplicationDbContext DbContext { get; set; }
+
+    async Task Save()
+    {
+        Link.Campaign = Campaign;
+
+        DbContext.Links.Add(Link);
+        await DbContext.SaveChangesAsync();
+
+        await LinkCreated.InvokeAsync(Link);
+        await ShowingChanged.InvokeAsync(false);
+
+        Link = new Link();
+    }
+
+    protected async void BlurDestination()
+    {
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Add("User-Agent", "Orchid Link");
+
+        try {
+            var content = await client.GetStringAsync(Link.Destination);
+            Regex ex = new Regex(@"(?<=<title.*>)([\s\S]*)(?=</title>)", RegexOptions.IgnoreCase);
+
+            Link.Title = ex.Match(content).Value.Trim();
+        }
+        catch (System.InvalidOperationException exception) {
+            
+        }
+    }
+}
