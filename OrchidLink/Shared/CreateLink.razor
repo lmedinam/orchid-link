@@ -25,7 +25,12 @@
 
     <div>
         <input type="submit" class="button" value="Save" />
-        <button class="button" @onclick=@(() => ShowingChanged.InvokeAsync(false))>
+        <button 
+            class="button" 
+            @onclick=@(() => ShowingChanged.InvokeAsync(false))
+            @onclick:preventDefault="true" 
+            @onclick:stopPropagation="true"
+        >
             Cancel
         </button>
     </div>

@@ -3,8 +3,10 @@
 
 <PageTitle>Links</PageTitle>
 
-<div class="cell small-2"><CampaignList @bind-CurrentCampaign=CurrentCampaign /></div>
-<LinkViewer CurrentCampaign=@CurrentCampaign />
+<CascadingValue Value=@LinkId>
+	<div class="cell small-2"><CampaignList @bind-CurrentCampaign=CurrentCampaign /></div>
+	<LinkViewer CurrentCampaign=@CurrentCampaign />
+</CascadingValue>
 
 @code {
 	public Campaign? CurrentCampaign = null;

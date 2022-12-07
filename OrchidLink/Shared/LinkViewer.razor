@@ -1,6 +1,8 @@
 ﻿@using OrchidLink.Data
 @using OrchidLink.Models
 
+@inject NavigationManager _navigationManager
+
 <aside class="cell small-2">
 	<div class="grid-x">
 		<h3 class="cell auto">Links</h3>
@@ -24,6 +26,15 @@
 			{
 				<CreateLink @bind-Showing="CreatingLink" Campaign=@CurrentCampaign LinkCreated=@FetchLinks />
 			}
+			else if (Link != null)
+			{
+				<h4>@Link.Title</h4>
+				<a href="https://@(GenerateLinkUrl())">https://@(GenerateLinkUrl())</a>
+			}
+			else
+			{
+				<p>Select an link item or create a new one to show here.</p>
+			}
 		</div>
 	</div>
 </main>
@@ -31,7 +42,12 @@
 @code {
 	public bool CreatingLink = false;
 
+	Link? Link = null;
+
 	List<Link> Links = new List<Link>();
+
+	[CascadingParameter]
+	public string? LinkId { get; set; }
 
 	[Parameter]
 	public Campaign? CurrentCampaign { get; set; }
@@ -58,5 +74,19 @@
 	protected override void OnParametersSet()
 	{
 		FetchLinks();
+
+		if (LinkId != null)
+		{
+			Link = DbContext.Links.Where(d => d.Id == LinkId).First();
+			return;
+		}
+
+		Link = null;
+	}
+
+	protected string GenerateLinkUrl()
+	{
+		var authority = new Uri(_navigationManager.Uri).Authority;
+		return $"{authority}/go/{Link.Slug}";
 	}
 }
