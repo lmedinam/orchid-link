@@ -362,5 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# CSS
+# CSS and JS
 OrchidLink/wwwroot/css/site.css
+OrchidLink/wwwroot/js/site.js
