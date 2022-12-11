@@ -76,7 +76,7 @@
 
     async Task UpdateCurrentCampaignValue(Campaign currentCampaign)
     {
-        CurrentCampaign = currentCampaign;
+        CurrentCampaign = CurrentCampaign != null && currentCampaign.Id == CurrentCampaign.Id ? null : currentCampaign;
         await CurrentCampaignChanged.InvokeAsync(CurrentCampaign);
     }
 
