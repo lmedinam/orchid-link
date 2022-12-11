@@ -17,6 +17,20 @@
   transition: background-color 0.5s;
   position: relative;
 }
+.card-list .card-list-item .title {
+  margin-bottom: 0;
+  font-weight: bold;
+}
+.card-list .card-list-item .sub-title {
+  font-weight: normal;
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+.card-list .card-list-item .icon {
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: 0.5em;
+}
 .card-list .card-list-item::before {
   content: "";
   position: absolute;
@@ -28,6 +42,9 @@
   height: 0;
   border-radius: 9999px;
   transition: height 0.25s;
+}
+.card-list .card-list-item:hover {
+  background-color: #1b1a2d;
 }
 .card-list .card-list-item.active {
   background-color: #1b1a2d;

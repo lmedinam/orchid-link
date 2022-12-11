@@ -1,0 +1,27 @@
+﻿@each $prop in ('padding', 'margin') {
+	.remove-#{$prop} {
+		&-x {
+			#{$prop}-left: 0;
+			#{$prop}-right: 0;
+		}
+
+		&-y {
+			#{$prop}-top: 0;
+			#{$prop}-bottom: 0;
+		}
+	}
+}
+
+.h-full {
+	height: 100%;
+}
+
+.sub-title {
+	font-weight: normal;
+	font-size: 0.85rem;
+	margin-bottom: 0;
+}
+
+.overflow-y-auto {
+	overflow-y: auto;
+}

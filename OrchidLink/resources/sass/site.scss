@@ -19,7 +19,9 @@
 @include foundation-reveal;
 
 @import 'global';
+@import 'utility';
 @import 'components/card-list';
+@import 'components/aside-block';
 
 .card {
     background-color: var(--card-bg);
@@ -29,5 +31,13 @@
     &.full {
         height: 100%;
     }
+
+    .card-header {
+        margin-bottom: 0.5em;
+    }
+}
+
+.top-bar {
+    border-bottom: 1px solid #3e3e4b;
 }
 

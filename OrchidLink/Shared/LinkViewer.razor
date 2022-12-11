@@ -3,17 +3,27 @@
 
 @inject NavigationManager _navigationManager
 
-<aside class="cell small-3">
+<aside class="cell small-3 aside-block">
 	<div class="card card-section full">
-		<div class="grid-x">
-			<h3 class="cell auto">Links</h3>
-			<button class="button small" @onclick="@(() => CreatingLink = true)">New</button>
+		<div class="grid-x card-header">
+			<div class="cell auto">
+				<h3 class="h5 remove-margin-y">Links</h3>
+				<span class="sub-title">@(CurrentCampaign != null ? CurrentCampaign.Name : "Showing all links without campaign")</span>
+			</div>
+			<div>
+				<button 
+					class="button small" 
+					@onclick="@(() => CreatingLink = true)"
+				>
+					New
+				</button>
+			</div>
 		</div>
-		<ul>
+		<ul class="card-list">
 			@foreach (var link in Links)
 			{
-				<li >
-					<a href="/Links/@link.Id">
+				<li>
+					<a class="card-list-item @(link.Id == LinkId ? "active" : "")" href="/Links/@link.Id">
 						@link.Title
 					</a>
 				</li>
@@ -21,7 +31,7 @@
 		</ul>
 	</div>
 </aside>
-<main class="cell auto">
+<main class="cell auto aside-block borderless">
 	@if (CreatingLink)
 	{
 		<CreateLink @bind-Showing="CreatingLink" Campaign=@CurrentCampaign LinkCreated=@FetchLinks />

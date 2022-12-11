@@ -1,6 +1,8 @@
 ﻿@use "sass:map";
 @import '../settings';
 
+$active-item: #1b1a2d;
+
 .card-list {
     list-style-type: none;
     margin: 0;
@@ -21,6 +23,23 @@
         transition: background-color 0.5s;
         position: relative;
 
+        .title {
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+
+        .sub-title {
+            font-weight: normal;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+        }
+
+        .icon {
+            height: 1.5em;
+            width: 1.5em;
+            margin-right: 0.5em;
+        }
+
         &::before {
             content: '';
             position: absolute;
@@ -34,8 +53,12 @@
             transition: height 0.25s;
         }
 
+        &:hover {
+            background-color: $active-item;
+        }
+
         &.active {
-            background-color: #1b1a2d;
+            background-color: $active-item;
 
             &::before {
                 height: 50%;

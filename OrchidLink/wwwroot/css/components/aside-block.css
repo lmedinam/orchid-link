@@ -1,0 +1,6 @@
+.aside-block {
+  padding: 1em;
+}
+.aside-block + .aside-block:not(.borderless) {
+  border-left: 1px solid #3e3e4b;
+}

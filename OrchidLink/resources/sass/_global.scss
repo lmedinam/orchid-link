@@ -1,4 +1,7 @@
-﻿html {
+﻿@use "sass:map";
+@import 'settings';
+
+html {
     --text-color: #000;
     --card-bg: #fff;
 
@@ -15,6 +18,25 @@ body {
 
     @media (prefers-color-scheme: dark) {
         background-color: #151521;
+    }
+}
+
+* {
+    &::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 9999px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #1b1a2d;
+        border: solid 3px transparent;
+        border-radius: 9999px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: map.get($foundation-palette, 'primary');
+        border: solid 3px transparent;
+        border-radius: 9999px;
     }
 }
 
