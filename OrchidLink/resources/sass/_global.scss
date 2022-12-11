@@ -1,0 +1,23 @@
+﻿html {
+    --text-color: #000;
+    --card-bg: #fff;
+
+    @media (prefers-color-scheme: dark) {
+        --text-color: #fff;
+        --card-bg: #1e1e2d;
+    }
+}
+
+body {
+    background-color: #f9fafc;
+    min-height: 100vh;
+    color: var(--text-color);
+
+    @media (prefers-color-scheme: dark) {
+        background-color: #151521;
+    }
+}
+
+label {
+    color: var(--text-color);
+}

@@ -2,31 +2,24 @@
 @import 'foundation';
 @import 'blazor';
 
-@include foundation-everything;
+@include foundation-global-styles;
+@include foundation-forms;
+@include foundation-typography;
 
-html {
-    --text-color: #000;
-    --card-bg: #fff;
+@include foundation-xy-grid-classes;
 
-    @media (prefers-color-scheme: dark) {
-        --text-color: #fff;
-        --card-bg: #1e1e2d;
-    }
-}
+@include foundation-button;
+@include foundation-label;
+@include foundation-media-object;
+@include foundation-card;
+@include foundation-dropdown;
+@include foundation-menu;
+@include foundation-top-bar;
+@include foundation-media-object;
+@include foundation-reveal;
 
-body {
-    background-color: #f9fafc;
-    min-height: 100vh;
-    color: var(--text-color);
-
-    @media (prefers-color-scheme: dark) {
-        background-color: #151521;
-    }
-}
-
-label {
-   color: var(--text-color);
-}
+@import 'global';
+@import 'components/card-list';
 
 .card {
     background-color: var(--card-bg);
@@ -38,25 +31,3 @@ label {
     }
 }
 
-.card-list {
-    list-style-type: none;
-    margin: 0;
-
-    & > *:not(:last-child) {
-        margin-bottom: 0.5em;
-    }
-
-    .card-list-item {
-        border-radius: $global-radius;
-        display: block;
-        width: 100%;
-        padding: 0.75em 1.50em;
-        cursor: pointer;
-        text-align: left;
-        color: var(--text-color);
-
-        &.active {
-            background-color: #1b1a2d;
-        }
-    }
-}

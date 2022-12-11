@@ -1,0 +1,45 @@
+﻿@use "sass:map";
+@import '../settings';
+
+.card-list {
+    list-style-type: none;
+    margin: 0;
+
+    & > *:not(:last-child) {
+        margin-bottom: 0.5em;
+    }
+
+    .card-list-item {
+        border-radius: $global-radius;
+        display: block;
+        width: 100%;
+        padding: 0.75em 1.50em;
+        cursor: pointer;
+        text-align: left;
+        color: var(--text-color);
+        background-color: transparent;
+        transition: background-color 0.5s;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0.50em;
+            width: 4px;
+            background-color: map.get($foundation-palette, 'primary');
+            transform: translateY(-50%);
+            top: 50%;
+            height: 0;
+            border-radius: 9999px;
+            transition: height 0.25s;
+        }
+
+        &.active {
+            background-color: #1b1a2d;
+
+            &::before {
+                height: 50%;
+            }
+        }
+    }
+}

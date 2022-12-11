@@ -1,0 +1,37 @@
+.card-list {
+  list-style-type: none;
+  margin: 0;
+}
+.card-list > *:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+.card-list .card-list-item {
+  border-radius: 8px;
+  display: block;
+  width: 100%;
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-color);
+  background-color: transparent;
+  transition: background-color 0.5s;
+  position: relative;
+}
+.card-list .card-list-item::before {
+  content: "";
+  position: absolute;
+  left: 0.5em;
+  width: 4px;
+  background-color: #6f62eb;
+  transform: translateY(-50%);
+  top: 50%;
+  height: 0;
+  border-radius: 9999px;
+  transition: height 0.25s;
+}
+.card-list .card-list-item.active {
+  background-color: #1b1a2d;
+}
+.card-list .card-list-item.active::before {
+  height: 50%;
+}
