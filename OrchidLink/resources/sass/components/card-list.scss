@@ -26,6 +26,9 @@ $active-item: #1b1a2d;
         .title {
             margin-bottom: 0;
             font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .sub-title {

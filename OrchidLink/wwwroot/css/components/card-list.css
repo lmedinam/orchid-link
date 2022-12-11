@@ -20,6 +20,9 @@
 .card-list .card-list-item .title {
   margin-bottom: 0;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .card-list .card-list-item .sub-title {
   font-weight: normal;
