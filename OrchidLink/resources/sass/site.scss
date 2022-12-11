@@ -3,3 +3,60 @@
 @import 'blazor';
 
 @include foundation-everything;
+
+html {
+    --text-color: #000;
+    --card-bg: #fff;
+
+    @media (prefers-color-scheme: dark) {
+        --text-color: #fff;
+        --card-bg: #1e1e2d;
+    }
+}
+
+body {
+    background-color: #f9fafc;
+    min-height: 100vh;
+    color: var(--text-color);
+
+    @media (prefers-color-scheme: dark) {
+        background-color: #151521;
+    }
+}
+
+label {
+   color: var(--text-color);
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: none;
+    color: var(--text-color);
+
+    &.full {
+        height: 100%;
+    }
+}
+
+.card-list {
+    list-style-type: none;
+    margin: 0;
+
+    & > *:not(:last-child) {
+        margin-bottom: 0.5em;
+    }
+
+    .card-list-item {
+        border-radius: $global-radius;
+        display: block;
+        width: 100%;
+        padding: 0.75em 1.50em;
+        cursor: pointer;
+        text-align: left;
+        color: var(--text-color);
+
+        &.active {
+            background-color: #1b1a2d;
+        }
+    }
+}

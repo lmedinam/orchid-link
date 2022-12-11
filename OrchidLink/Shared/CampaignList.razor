@@ -4,18 +4,23 @@
 @inject IJSRuntime js
 
 <aside>
-    <div class="grid-x">
-        <h3 class="cell auto">Campaigns</h3>
-        <button class="button small" data-open="createCampaignModal">New</button>
+    <div class="card-section">
+        <div class="grid-x">
+            <h3 class="cell auto h5">Campaigns</h3>
+            <button class="button small" data-open="createCampaignModal">New</button>
+        </div>
+        <ul class="card-list">
+            @foreach (var campaign in Campaigns)
+            {
+                <li>
+                    <button class="card-list-item @(IsActiveCampaign(campaign) ? "active" : "")" @onclick=@(() => UpdateCurrentCampaignValue(campaign))>Is
+                        @campaign.Name
+                    </button>
+                </li>
+            }
+        </ul>
     </div>
-    <ul>
-        @foreach (var campaign in Campaigns)
-        {
-            <li @onclick=@(() => UpdateCurrentCampaignValue(campaign))>@campaign.Name</li>
-        }
-    </ul>
 </aside>
-
 
 <div class="reveal" id="createCampaignModal" data-reveal>
     <h1>Create Campaign</h1>
@@ -72,6 +77,16 @@
     protected void FetchCampaigns()
     {
         Campaigns = DbContext.Campaigns.OrderBy(b => b.CreatedAt).ToList();
+    }
+
+    protected Boolean IsActiveCampaign(Campaign campaign)
+    {
+        if (CurrentCampaign != null) 
+        {
+            return CurrentCampaign.Id == campaign.Id;
+        }
+
+        return false;
     }
 }
 

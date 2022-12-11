@@ -78,8 +78,8 @@
 
             Link.Title = ex.Match(content).Value.Trim();
         }
-        catch (System.InvalidOperationException exception) {
-            
+        catch (System.InvalidOperationException) {
+            // Ignore this exception, the URL is just invalid.
         }
     }
 }
