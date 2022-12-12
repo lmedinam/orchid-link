@@ -1,4 +1,6 @@
-﻿@import 'settings';
+﻿@use "sass:map";
+
+@import 'settings';
 @import 'foundation';
 @import 'blazor';
 
@@ -41,3 +43,18 @@
     border-bottom: 1px solid #3e3e4b;
 }
 
+[type=text], [type=password], [type=date], [type=datetime],
+[type=datetime-local], [type=month], [type=week],
+[type=email], [type=number], [type=search],
+[type=tel], [type=time], [type=url], [type=color], textarea {
+    background-color: var(--card-bg);
+    border: 1px solid transparent;
+    transition: all 0.5s;
+    color: white;
+
+    &:focus {
+        background-color: var(--card-bg);
+        border: 1px solid map.get($foundation-palette, 'primary');
+        box-shadow: 0 0 5px map.get($foundation-palette, 'primary');
+    }
+}
